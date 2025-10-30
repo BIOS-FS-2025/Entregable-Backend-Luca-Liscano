@@ -1,9 +1,10 @@
 import { ObjectId } from "mongodb";
 import { getDB } from "../db.js";
+import posts from "../model/post.model.js";
 
 export const getPostById = async (postId) => {
   const db = getDB();
-  const postsCollection = db.collection("posts");
+  const postsCollection = posts();
   const post = await postsCollection.findOne({
     _id: new ObjectId(postId),
     IsAvailable: true,
@@ -17,7 +18,7 @@ export const getPostById = async (postId) => {
 
 export const createPost = async (postData, userId) => {
   const db = getDB();
-  const postsCollection = db.collection("posts");
+  const postsCollection = posts();
 
   const newPost = {
     title: postData.title, // Limpiamos espacios innecesarios
@@ -49,7 +50,7 @@ export const createPost = async (postData, userId) => {
 
 export const editPost = async (post, postData, userId) => {
   const db = getDB();
-  const postsCollection = db.collection("posts");
+  const postsCollection = posts();
   const oldPost = post;
 
   if (!oldPost) {
@@ -85,7 +86,7 @@ export const editPost = async (post, postData, userId) => {
 
 export const eliminatePost = async (post, userId) => {
   const db = getDB();
-  const postsCollection = db.collection("posts");
+  const postsCollection = posts();
 
   if (!post) {
     throw new Error("Post no encontrado");

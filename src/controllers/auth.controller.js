@@ -134,9 +134,7 @@ export const login = async (req, res, next) => {
 
     const twoFactorCode = generateTwoFactorCode();
     const twoFactorExpires = getTwoFactorExpirationTime();
-
-    console.log("Generated 2FA code:", twoFactorCode);
-
+    
     await usersCollection.updateOne(
       { _id: user._id },
       {
